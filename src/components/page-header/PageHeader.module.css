@@ -1,6 +1,7 @@
 .hero__container {
   position: relative;
-  background: url("../src/assets/hero-bg.jpg");
+  /* background: url("../src/assets/hero-bg.jpg"); */
+  background: url("/hero-bg.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

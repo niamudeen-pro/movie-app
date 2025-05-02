@@ -54,7 +54,7 @@ export default function Homepage() {
             <PageHeader mainHeading="Search Movies" subHeading="Search your favorite movies">
                 <>
                     {/* Movie search form */}
-                    <div className={styles["search__container"]}>
+                    <div className={styles.search__container}>
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
