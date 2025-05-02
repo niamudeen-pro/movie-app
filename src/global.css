@@ -1,0 +1,85 @@
+/* Importing Google Font: Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* Root variables for easy color theme management */
+:root {
+  --primary-color: #0c598d;
+  --primary-color-dark: #2050dd;
+  --primary-color-light: #2f5de7;
+  --light-gray: #f1eded;
+  --primary-color-hover: #084874;
+}
+
+/* Universal Reset for consistency across browsers */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--primary-color-dark);
+  border: none;
+  color: #fff;
+}
+button:hover {
+  background-color: var(--primary-color-light);
+}
+
+/*  utility classes */
+.responsive__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.loader__content {
+  padding: 50px;
+  text-align: center;
+}
+
+.flex__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex__between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*  custom styling */
+.movies__container {
+  padding-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.empty__placeholder {
+  padding-top: 100px;
+  flex-direction: column;
+}
+.empty__placeholder img {
+  width: 300px;
+  height: auto;
+}
