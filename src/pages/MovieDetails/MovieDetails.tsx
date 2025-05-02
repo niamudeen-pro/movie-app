@@ -17,7 +17,7 @@ export default function MovieDetailPage() {
         (async () => {
             if (id) {
                 setLoading(true);
-                setError(''); // clear previous error
+                setError('');
                 try {
                     const movieData = await fetchMovieById(id);
                     setMovie(movieData);
