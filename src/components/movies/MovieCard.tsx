@@ -42,7 +42,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
 
     return (
-        <div className={styles.movie__card}>
+        <article className={styles.movie__card}>
+            {/* Card Image  */}
             <img
                 src={imageSrc}
                 alt={movie.Title}
@@ -50,11 +51,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
                 loading="lazy"
                 className={styles.movie__poster}
             />
+            {/* Card Header */}
             <div>
                 <h3 className={styles.movie__title}>{movie.Title}</h3>
                 <p className={styles.movie__year}>{movie.Year}</p>
             </div>
 
+            {/* Card Actions */}
             {currentRoute === "/favorites" && isFavorite && (
                 <button onClick={handleToggleFavorite} className={styles.movie__button}>
                     Remove from Favorites
@@ -70,6 +73,6 @@ export default function MovieCard({ movie }: MovieCardProps) {
             <button onClick={handleMoreInfo} className={styles.movie__button}>
                 More Info
             </button>
-        </div>
+        </article>
     );
 }

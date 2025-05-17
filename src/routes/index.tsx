@@ -3,7 +3,6 @@ import Homepage from '../pages/HomePage/Homepage'
 import MovieDetails from '../pages/MovieDetails/MovieDetails';
 import Favorites from '../pages/Favorites/Favorites';
 
-
 const router = createBrowserRouter([
     {
         path: "/",

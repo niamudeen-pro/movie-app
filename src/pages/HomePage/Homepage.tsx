@@ -1,83 +1,58 @@
 import { useEffect, useState } from "react";
-import { fetchMovies } from "../../services/apis/movies";
 import MoviesList from "../../components/movies/MoviesList";
 import { Link } from "react-router";
 import styles from "./Homepage.module.css";
 import PageHeader from "../../components/page-header/PageHeader";
 import ErrorPage from "../../components/error/ErrorPage";
 import EmptyPlaceholder from "../../components/EmptyPlaceholder";
+import { useMovieSearch } from "../../hooks/useMovieSearch";
 
 export default function Homepage() {
     const [searchText, setSearchText] = useState("");
-    const [movies, setMovies] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const { movies, loading, error, handleSearch, setMovies } = useMovieSearch()
 
-    const handleSearch = async (query: string) => {
-        const trimmedQuery = query.trim();
-        if (!trimmedQuery) return;
-
-        setLoading(true);
-        setError("");
-
-        try {
-            const result = await fetchMovies(trimmedQuery);
-            setMovies(result);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Failed to load movie details.");
-        } finally {
-            setLoading(false);
-        }
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchText(event.target.value);
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await handleSearch(searchText);
-    };
-
-    const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            await handleSearch(searchText);
-        }
+        const trimmedQuery = searchText.trim();
+        if (!trimmedQuery) return;
+        await handleSearch(trimmedQuery);
     };
 
     useEffect(() => {
+        // Clear movies list when search text is empty or just spaces
         if (!searchText.trim()) {
             setMovies(null);
         }
-    }, [searchText]);
+    }, [searchText, setMovies]);
 
     if (error) return <ErrorPage message={error} />
     return (
         <>
             <PageHeader mainHeading="Search Movies" subHeading="Search your favorite movies">
-                <>
-                    {/* Movie search form */}
-                    <div className={styles.search__container}>
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                placeholder="Search Movies here....."
-                                value={searchText}
-                                onChange={(event) => setSearchText(event.target.value)}
-                                onKeyDown={handleKeyDown}
-                                className={styles.input__text}
-                            />
-                            <button type="submit">{loading ? "Searching..." : "Search"}</button>
-                        </form>
-                    </div>
+                {/* Search block */}
+                <form onSubmit={handleSubmit} className={styles.search__container}>
+                    <input
+                        type="text"
+                        placeholder="Search Movies here....."
+                        value={searchText}
+                        onChange={handleInputChange}
+                        className={styles.input__text}
+                    />
+                    <button type="submit">{loading ? "Searching..." : "Search"}</button>
+                </form>
 
-                    {/* Link to favorites page */}
-                    <span>
-                        <Link to="/favorites" className={styles.watch__fav}>
-                            Watch your favorites movies here
-                        </Link>
-                    </span>
-                </>
+                {/* Watch your favorite movies */}
+                <p>
+                    <Link to="/favorites" className={styles.watch__fav}>
+                        Watch your favorite movies here
+                    </Link>
+                </p>
             </PageHeader>
-
-            {/* Show movie results if available, else show empty state */}
+            {/* Rendering movie cards */}
             {movies ? (
                 <section className="responsive__container">
                     <MoviesList movies={movies} loading={loading} />
@@ -86,5 +61,6 @@ export default function Homepage() {
                 <EmptyPlaceholder />
             )}
         </>
+
     );
 }
